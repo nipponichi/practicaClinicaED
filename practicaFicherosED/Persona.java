@@ -20,7 +20,7 @@ public class Persona {
 	 */
 	 protected String nombre;
 	 protected int edad;
-	 protected String DNI = "";
+	 protected String DNI;
 	 protected char sexo;
 	 protected double peso;
 	 protected double altura;
@@ -29,18 +29,6 @@ public class Persona {
 	  * Constructor Persona por defecto.
 	  */
 	 public Persona() {
-		this("", 0, SEXO_DEF, 0, 0);
-	 }
-	 
-	 /**
-	  * Constructor Persona con atributos: nombre, edad y sexo como<br>
-	  * parámetros. Resto por defecto.
-	  * @param nombre
-	  * @param edad
-	  * @param sexo
-	  */
-	 public Persona(String nombre, int edad, char sexo) {
-		this(nombre, edad, sexo, 0, 0);
 	 }
 	 
 	 /**
@@ -52,14 +40,14 @@ public class Persona {
 	  * @param altura
 	  */
 	 public Persona(String nombre, int edad, char sexo, double peso,
-			 double altura) {
+			 double altura, String dni) {
 		 this.nombre = nombre;
 		 this.edad = edad;
 		 this.peso = peso;
 		 this.altura = altura;
 		 this.sexo = sexo;
+		 this.DNI = dni;
 		 comprobarSexo();
-		 generarDni();
 	 }
 	 
 	 /**
@@ -72,34 +60,6 @@ public class Persona {
 		 	}
 	 }
 	 
-	 /**
-	  * Método con algoritmo de generación automática de DNI
-	  */
-	 protected void generarDni() {
-		 final int divisor = 23;
-		 
-		 // Generamos un número aleatorio entre 10 y 100 millones. (8 cifras).
-		 int numDNI = ((int) Math.floor(Math.random() * (100000000 -
-				 10000000) + 10000000));
-		 //Con el residuo de esta operacion generamos la letra del DNI
-		 int res = numDNI % divisor; //- (numDNI / divisor * divisor);
-		 char letraDNI = generaLetraDNI(res);
-		 DNI = Integer.toString(numDNI) + letraDNI;
-	 }
-	 
-	 /**
-	  * Metodo de optencion de letra de DNI Segun el resultado<br>
-	  * de resto de división entre numDni y divisor
-	  * @param res
-	  * @return letra para DNI según resto de división.
-	  */
-	 private char generaLetraDNI(int res) {
-		 char letras[] = {'T', 'R', 'W', 'A', 'G', 'M', 'Y',
-			 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z',
-			 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
-		 return letras[res];
-	}
-
 	 /**
 	  * //Método SET para atributo nombre.
 	  * @param nombre
@@ -143,6 +103,10 @@ public class Persona {
 	public String getDNI() {
 		return DNI;
 	}
+	
+	public void setDNI(String dNI) {
+		DNI = dNI;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -164,9 +128,7 @@ public class Persona {
 		return altura;
 	}
 	
-	public void setDNI(String dNI) {
-		DNI = dNI;
-	}
+
 	
 	/**
 	  * Método de cálculo  de IMC

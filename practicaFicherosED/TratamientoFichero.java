@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
 
 public class TratamientoFichero {
 	static PersonaApp_Scanner personaApp = new PersonaApp_Scanner();
+	static Paciente paciente = new Paciente();
+	static Visita visita = new Visita();
+	static Profesionales_Medicos medico = new Profesionales_Medicos();
 	static String rutaPaciente = "C:\\Users\\Javier\\eclipse-workspace\\practicaFicherosED\\src"
 			+ "\\almacenamiento\\Pacientes.txt";
 	static String rutaVisita = "C:\\Users\\Javier\\eclipse-workspace\\practicaFicherosED\\src"
@@ -48,17 +51,17 @@ public class TratamientoFichero {
 			 */
 			
 			//Si no es visita y el dni es recogido por teclado
-			if (esVisita != true && p.getDniTeclado() != null) {
-				pw.println(p.getDniTeclado()+","+p.getNombre()+","+p.getEdad()+","+p.getCalle()+","
+			if (esVisita != true && p.getDni() != null) {
+				pw.println(p.getDni()+","+p.getNombre()+","+p.getEdad()+","+p.getCalle()+","
 						+ ""+p.getLocalidad()+","+p.getCodPostal());
 				System.out.println("++++++++++++++++++++++++++++++++++++++++\nRegistro de nuevo paciente con "
-						+ "dni "+p.getDniTeclado()+" ha sido guardado con exito.\n"
+						+ "dni "+p.getDni()+" ha sido guardado con exito.\n"
 								+ "++++++++++++++++++++++++++++++++++++++++");
 			
 			//Si no es visita y el dni no es recogido por teclado
 			} 
 			
-			else if (esVisita != true && p.getDniTeclado() == null) {
+			else if (esVisita != true && p.getDni() == null) {
 				pw.println(p.getDNI()+","+p.getNombre()+","+p.getEdad()+","+p.getCalle()+","
 						+ ""+p.getLocalidad()+","+p.getCodPostal());
 				System.out.println("++++++++++++++++++++++++++++++++++++++++\nRegistro de nuevo paciente con "
@@ -69,11 +72,10 @@ public class TratamientoFichero {
 			} 
 			
 			else {
-				pw.println("DNI: "+p.getDniTeclado()+", Fecha: "+p.getFecha()+
-					", Hora:"+p.getHora()+", Peso: "+p.getPeso()+"Kgs, Altura: "
+				pw.println("DNI: "+p.getDni()+", Peso: "+p.getPeso()+"Kgs, Altura: "
 							+ ""+p.getAltura()+"m, IMC: "+p.calcularIMC());
 				System.out.println("++++++++++++++++++++++++++++++++++++++++\nRegistro de visita de paciente con "
-						+ "dni "+p.getDniTeclado()+" ha sido guardado con exito.\n"
+						+ "dni "+p.getDni()+" ha sido guardado con exito.\n"
 								+ "++++++++++++++++++++++++++++++++++++++++");
 			}
 			
@@ -102,14 +104,14 @@ public class TratamientoFichero {
 			}
 		} 
 		// Si el paciente es continuamos registrando la visita inicial
-		if (esPacienteNuevo == true && p.getDniTeclado() != null) {
+		if (esPacienteNuevo == true && p.getDni() != null) {
 			System.out.println("Se procede a registrar la visita inicial");
-			personaApp.registroVisita(p.getDniTeclado());
+			visita.registroVisita(p.getDni());
 		}
 		
-		else if (esPacienteNuevo == true && p.getDniTeclado() == null) {
+		else if (esPacienteNuevo == true && p.getDni() == null) {
 			System.out.println("Se procede a registrar la visita inicial");
-			personaApp.registroVisita(p.getDNI());
+			visita.registroVisita(p.getDNI());
 			
 		}
 		
@@ -120,83 +122,32 @@ public class TratamientoFichero {
 	}//grabarCliente
 	
 	/**
-	 * Método de busqueda de DNI en archivo Pacientes.txt
+	 * Método de busqueda de DNI en Pacientes
 	 * @param dni de tipo String.
-	 * @return true o false si el DNI se encuentra en el archivo Pacientes.txt
+	 * @return true o false si el DNI se encuentra en el arrayList de pacientes
 	 */
 	public static boolean esDniRegistrado (String dni) {
-		String ruta = rutaPaciente;
-		File f = new File(ruta);
-		Scanner s;
-			/**
-			 * Método para tomar valores de los campos
-			 * establecidos por el delimitador ','.
-			 */
-			try {
-				s = new Scanner(f);
-				while (s.hasNextLine()) {
-					String linea = s.nextLine();
-					Scanner sl = new Scanner(linea);
-					sl.useDelimiter("\\s*,\\s*");
-					//Comprobamos si hay un DNI igual
-					if (sl.next().equals(dni)) {
-						sl.close();
-						return true;
-					}
-					sl.close();
-				}
-				s.close();
-			} 
-			
-			catch (FileNotFoundException e) {
-				System.err.println("El fichero 'Pacientes.txt' no existe para la ruta expecificada");
-				e.printStackTrace();
+		int posicion = PersonaApp_Scanner.pacientes.size();
+		for (int i = 0; i < posicion; i++) {
+			if(PersonaApp_Scanner.pacientes.get(i).getDNI().equals(dni)){
+				return true;
+			}
 		}
-			return false;		
+		return false;
 	} //esDniRegistrado
 	
 	/**
-	 * Comprobamos si el cliente ha sido registrado en Visitas.txt
-	 * y mostramos su evolucion histórica en la clínica.
+	 * Comprobamos si el cliente ha sido registrado en Visitas
 	 * @param dni
 	 */
-	@SuppressWarnings("resource")
-	public static void esHistorico (String dni) {
-		String ruta = rutaVisita;
-		File f = new File(ruta);
-		Scanner s;
-			/**
-			 * Método para tomar valores de los campos
-			 * establecidos por el delimitador ','.
-			 */
-			try {
-				s = new Scanner(f);
-				while (s.hasNextLine()) {
-					String linea = s.nextLine();
-					Scanner slIf = new Scanner(linea);
-					Scanner slWhile = new Scanner(linea);
-					slIf.useDelimiter("\\s*,\\s*");
-					slWhile.useDelimiter("\\s*,\\s*");
-					/**
-					 * Mostramos datos de fichero Visitas.txt si se encuentra el
-					 * dni introducido por teclado en MAIN.
-					 */
-					while (slWhile.hasNext() && slWhile.next().equals("DNI: "+dni)) {
-						System.out.print(slWhile.next()+", ");
-						System.out.print(slWhile.next()+", ");
-						System.out.print(slWhile.next()+", ");
-						System.out.print(slWhile.next()+", ");
-						System.out.print(slWhile.next()+", \n");
-						}
-					}
-				s.close();
-			} 
-			
-			catch (FileNotFoundException e) {
-				System.err.println("El fichero 'Pacientes.txt' no existe para la ruta expecificada");
-				e.printStackTrace();
-				}
-			Menu.menuInicial();
+	public static boolean esHistorico (String dni) {
+		int posicion = PersonaApp_Scanner.visitas.size();
+		for (int i = 0; i < posicion; i++) {
+			if(PersonaApp_Scanner.visitas.get(i).getDniPaciente().equals(dni)){
+				return true;
+			}
+		}
+		return false;
 	}//esHistorico
 
 	/**
@@ -209,4 +160,5 @@ public class TratamientoFichero {
 		Matcher mat = pat.matcher (entrada);
 		return (mat.find());
 	}//esDniValido
+	
 }
