@@ -10,9 +10,9 @@ import java.util.Scanner;
  *
  */
 
-public class Profesionales_Medicos {
+public class Profesionales_Medicos extends Persona {
 	private int codigo; 
-	private String nombre, apellidos, dni, localidad, telefono, especialidad;
+	private String apellidos, localidad, telefono, especialidad;
 
 
 	public Profesionales_Medicos() {
@@ -30,11 +30,11 @@ public class Profesionales_Medicos {
 		this.especialidad = especialidad;	
 	}
 		
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 
@@ -110,16 +110,44 @@ public class Profesionales_Medicos {
 		System.out.println("Introduce especialidad:");
 		Scanner scEspecialidad = new Scanner(System.in);
 		especialidad = scEspecialidad.nextLine();
-		medico = new Profesionales_Medicos(codigo, nombre, apellidos, 
+		medico = new Profesionales_Medicos (codigo, nombre, apellidos, 
 				dni, localidad, telefono, especialidad);
+		PersonaApp_Scanner.medicos.add(medico);
+		Menu.menuContinuar();
 		
 	}
-	
+	/**
+	 * Asigna profesional medico automáticamente
+	 * @return
+	 */
     public String asignarMedico() {
     	int posicion = PersonaApp_Scanner.medicos.size();
         Random random = new Random();
         int posicionAleatoria = random.nextInt(posicion);
         return PersonaApp_Scanner.medicos.get(posicionAleatoria).getDni();
     }
-	
+    
+    @SuppressWarnings("resource")
+	public static Profesionales_Medicos selectorDoctor() {
+    	int opcion;
+    	Profesionales_Medicos medico = new Profesionales_Medicos();
+        do {
+            System.out.println("Seleccione un Doctor del listado:");
+            for (int i = 0; i <PersonaApp_Scanner.medicos.size(); i++) {
+                System.out.println((i + 1) + ". " + PersonaApp_Scanner.medicos.get(i));
+            }
+            System.out.println("0. Salir");
+            Scanner scOpcion = new Scanner(System.in);
+            opcion = scOpcion.nextInt();
+
+            if (opcion >= 1 && opcion <= PersonaApp_Scanner.medicos.size()) {
+                medico = PersonaApp_Scanner.medicos.get(opcion - 1);
+                System.out.println("Ha seleccionado al Dr. " + medico.getApellidos());
+        		return medico;
+            } else if (opcion != 0) {
+                System.out.println("Opción inválida. Intente nuevamente.");
+            }
+        } while (opcion != 0);
+		return null;
+    }	
 }

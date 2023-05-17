@@ -20,10 +20,11 @@ public class Persona {
 	 */
 	 protected String nombre;
 	 protected int edad;
-	 protected String DNI;
-	 protected char sexo;
+	 protected String dni;
+	 protected String sexo;
 	 protected double peso;
 	 protected double altura;
+	 protected String localidad;
 
 	 /**
 	  * Constructor Persona por defecto.
@@ -38,26 +39,27 @@ public class Persona {
 	  * @param sexo
 	  * @param peso
 	  * @param altura
+	  * @param dni
+	  * @param localidad
 	  */
-	 public Persona(String nombre, int edad, char sexo, double peso,
+	 public Persona(String nombre, int edad, String sexo, double peso,
 			 double altura, String dni) {
 		 this.nombre = nombre;
 		 this.edad = edad;
 		 this.peso = peso;
 		 this.altura = altura;
 		 this.sexo = sexo;
-		 this.DNI = dni;
-		 comprobarSexo();
+		 this.dni = dni;
 	 }
 	 
 	 /**
-	  * Método de comprobacion de Sexo, otorga sexo H por defecto<br>
+	  * Método de comprobacion de Sexo, otorga sexo H por defecto
 	  * si el caracter introducido es diferente de 'H' o 'M'
 	  */
-	 protected void comprobarSexo() {
+	 protected void comprobarSexo(char sexo) {
 		 if (sexo != 'H' && sexo != 'M') {
-			 this.sexo = SEXO_DEF;
-		 	}
+				sexo = SEXO_DEF;
+			}
 	 }
 	 
 	 /**
@@ -80,7 +82,7 @@ public class Persona {
 	  * //Método SET para atributo sexo.
 	  * @param sexo
 	  */
-	 public void setSexo(char sexo) {
+	 public void setSexo(String sexo) {
 		 this.sexo = sexo;
 	}
 
@@ -100,12 +102,12 @@ public class Persona {
 		 this.altura = altura;
 	}
 	 
-	public String getDNI() {
-		return DNI;
+	public String getDni() {
+		return dni;
 	}
 	
-	public void setDNI(String dNI) {
-		DNI = dNI;
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 	public String getNombre() {
@@ -116,7 +118,7 @@ public class Persona {
 		return edad;
 	}
 
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
@@ -127,8 +129,6 @@ public class Persona {
 	public double getAltura() {
 		return altura;
 	}
-	
-
 	
 	/**
 	  * Método de cálculo  de IMC
@@ -156,7 +156,20 @@ public class Persona {
 	  */
 	 public boolean esMayorDeEdad() {
 		 return (this.edad >= 18);
-	 }
+	 }//esMayorDeEdad
+	 
+	 /**
+	  * 
+	  * @param sexo
+	  * @return
+	  */
+	 public String determinarSexo(String sexo) {
+			if (sexo.equals("H")) {
+				return "Hombre";
+			} else {
+				return "Mujer";
+			}
+	}
 	 
 	 /**
 	  * Método para representar los parámetros de los atributos del objeto Persona.
@@ -165,19 +178,14 @@ public class Persona {
 	 public String toString() {
 		 //Convertimos el caracter de sexo 'H' o 'M'
 		 //en String Hombre o Mujer
-		 String sexo;
-		 if (this.sexo == 'H') {
-			 sexo = "Hombre";
-		 } 
-		 else {
-			 sexo = "Mujer";
-		 }
+		 String sexo = "";
+
 		 return "Informacion de la persona:\n"
 		 + "Nombre: " + nombre + "\n"
 		 + "Sexo: " + sexo + "\n"
 		 + "Edad: " + edad + "\n"  
-		 + "DNI: " + DNI + "\n"
+		 + "DNI: " + dni + "\n"
 		 + "Peso: " + peso + " kg\n"
 		 + "Altura: " + altura + " metros\n";
-	 }
+	 }//toString
 }

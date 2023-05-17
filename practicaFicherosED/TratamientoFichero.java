@@ -111,7 +111,7 @@ public class TratamientoFichero {
 		
 		else if (esPacienteNuevo == true && p.getDni() == null) {
 			System.out.println("Se procede a registrar la visita inicial");
-			visita.registroVisita(p.getDNI());
+			visita.registroVisita(p.getDni());
 			
 		}
 		
@@ -129,7 +129,7 @@ public class TratamientoFichero {
 	public static boolean esDniRegistrado (String dni) {
 		int posicion = PersonaApp_Scanner.pacientes.size();
 		for (int i = 0; i < posicion; i++) {
-			if(PersonaApp_Scanner.pacientes.get(i).getDNI().equals(dni)){
+			if(PersonaApp_Scanner.pacientes.get(i).getDni().equals(dni)){
 				return true;
 			}
 		}
@@ -152,7 +152,7 @@ public class TratamientoFichero {
 
 	/**
 	 * Comprueba si el formato del dni corresponde al estandar
-	 * comparando con un patron que exije 8 cifras y una letra.
+	 * comparando con un patron que exige 7 u8 cifras y una letra.
 	 * @return true o false
 	 */
 	public static boolean esDniValido(String entrada) {

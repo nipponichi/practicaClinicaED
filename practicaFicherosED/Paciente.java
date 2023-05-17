@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Paciente extends Persona {
 	private String calle;
-	private String localidad;
 	private String codPostal;
 	private String dni;	
 	
@@ -13,34 +12,31 @@ public class Paciente extends Persona {
 	}
 	
 	public Paciente (String nombre, int edad, String calle, String localidad,
-			String codPostal) {
-		this.nombre = nombre;
-		this.edad = edad;
-		this.calle = calle;
-		this.localidad = localidad;
-		this.codPostal = codPostal;
-	}
-	
-	public Paciente (String nombre, int edad, String calle, String localidad,
-			String codPostal, String dni) {
+			String codPostal, String dni, String sexo) {
 		this.nombre = nombre;
 		this.edad = edad;
 		this.calle = calle;
 		this.localidad = localidad;
 		this.codPostal = codPostal;
 		this.dni = dni;
+		this.sexo = sexo;
 	}
 	
 	public Paciente (String nombre, int edad, String calle, String localidad,
-			String codPostal, String dni, double peso,
+			String codPostal, String dni, String sexo, double peso, double altura) {
+		this.nombre = nombre;
+		this.edad = edad;
+		this.calle = calle;
+		this.localidad = localidad;
+		this.codPostal = codPostal;
+		this.dni = dni;
+		this.sexo = sexo;
+		this.peso = peso;
+		this.altura = altura;
+	}
+	
+	public Paciente (double peso,
 			 double altura) {
-		this.nombre = nombre;
-		this.edad = edad;
-		this.calle = calle;
-		this.localidad = localidad;
-		this.codPostal = codPostal;
-		this.dni = dni;
-		this.nombre = nombre;
 		this.peso = peso;
 		this.altura = altura;
 	}
@@ -86,7 +82,8 @@ public class Paciente extends Persona {
 	public void registroPaciente() {
 		boolean esDniRegistrado = false, esDniValido;
 		Visita visita = new Visita();
-		String dni;
+		Persona persona = new Persona();
+		String dni = null;
 		
 		System.out.println("********************************\n"
 				+ "Introduce datos de nuevo paciente"
@@ -100,18 +97,19 @@ public class Paciente extends Persona {
 		
 			esDniValido = TratamientoFichero.esDniValido(dni);
 		
-			if (esDniValido == true) {
+			if (esDniValido) {
 					esDniRegistrado = TratamientoFichero.esDniRegistrado(dni);
-					if (esDniRegistrado == true) {
+					if (esDniRegistrado) {
 						System.out.println("El paciente ya se encuentra en "
 								+ "nuestro registro de pacientes.");
+						Menu.menuPacienteRegistrado(dni);
 					}
 			}
 		
-			if (esDniValido == false) {
+			if (!esDniValido) {
 				System.out.println("El dni introducido no es valido");
 			}
-		}while (esDniValido == false && esDniRegistrado == false);
+		}while (!esDniValido && !esDniRegistrado);
 		
 		System.out.println("Introduzca el nombre");
 		Scanner scNombre = new Scanner(System.in);
@@ -121,6 +119,12 @@ public class Paciente extends Persona {
 		Scanner scEdad = new Scanner(System.in);
 		int edad = scEdad.nextInt();
 		PersonaApp_Scanner.MuestraMensajeEdad(edad);
+			
+		System.out.println("Introduzca el sexo");
+		Scanner scSexo = new Scanner(System.in);
+		char sexo = scSexo.nextLine().charAt(0);
+		persona.comprobarSexo(sexo);
+		String sexoStr = persona.determinarSexo(Character.toString(sexo));
 		
 		System.out.println("Introduzca la calle");
 		Scanner scCalle = new Scanner(System.in);
@@ -139,8 +143,9 @@ public class Paciente extends Persona {
 		 * de nuevo paciente.
 		 */
 		Paciente paciente = new Paciente(nombre, edad, calle, localidad,
-				codPostal,dni);
-		visita.registroVisita(dni, paciente);
+				codPostal,dni, sexoStr);
+		PersonaApp_Scanner.pacientes.add(paciente);
+		visita.registroVisita(dni);
 	}//registroPaciente
 
 	/**
@@ -179,18 +184,22 @@ public class Paciente extends Persona {
 		} while (esDniValido == false || esDniRegistrado == false);	
 	}//historialPaciente
 	
+	
 	public Paciente selectorPaciente(String dni) {
 	    int posicion = PersonaApp_Scanner.pacientes.size();
-	    Paciente paciente = null;
 	    for (int i = 0; i < posicion; i++) {
-	        if (PersonaApp_Scanner.pacientes.get(i).getDni().equals(dni)) {
-	            paciente = PersonaApp_Scanner.pacientes.get(i);
-	            break;
+	        Paciente paciente = PersonaApp_Scanner.pacientes.get(i);
+	        if (paciente.getDni().equals(dni)) {
+	            return paciente; // Retorna el paciente encontrado con el mismo DNI
 	        }
 	    }
-	    return paciente;
+	    return null;
 	}//selectorPaciente
 	
+	/**
+	 * Método
+	 */
+	@SuppressWarnings("resource")
 	public void registroAuxiliar() {
 		Visita visita = new Visita();
 		boolean esMenu = false;
@@ -209,7 +218,7 @@ public class Paciente extends Persona {
 					registroPaciente();
 					break;
 				case 2:
-					visita.registroVisita(null,null);
+					visita.registroVisita(null);
 					break;
 				case 3:
 					Menu.menuInicial();
@@ -223,4 +232,4 @@ public class Paciente extends Persona {
 	
 		} while (esMenu == true);
 	}//registroVisita
-}
+}//Paciente

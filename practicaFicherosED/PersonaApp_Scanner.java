@@ -43,7 +43,7 @@ public class PersonaApp_Scanner {
 	 */
 	public static void MuestraMensajeEdad(int edad) {
 		Paciente p = new Paciente("", edad, "", "",
-				"");
+				"", null,null );
 		boolean mayoriaEdad = p.esMayorDeEdad();
 		
 		if (mayoriaEdad == true) {
