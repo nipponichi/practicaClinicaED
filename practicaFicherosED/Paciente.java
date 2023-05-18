@@ -1,4 +1,4 @@
-package practicaFicherosED;
+		package practicaFicherosED;
 
 import java.util.Scanner;
 
@@ -90,26 +90,22 @@ public class Paciente extends Persona {
 				+ "\n********************************");
 		
 		do {
-			System.out.println("Inserte el dni del paciente: ");
-		
-			Scanner scDni = new Scanner(System.in);
-			dni = scDni.nextLine().toUpperCase();
-		
-			esDniValido = TratamientoFichero.esDniValido(dni);
-		
-			if (esDniValido) {
-					esDniRegistrado = TratamientoFichero.esDniRegistrado(dni);
-					if (esDniRegistrado) {
-						System.out.println("El paciente ya se encuentra en "
-								+ "nuestro registro de pacientes.");
-						Menu.menuPacienteRegistrado(dni);
-					}
-			}
-		
-			if (!esDniValido) {
-				System.out.println("El dni introducido no es valido");
-			}
-		}while (!esDniValido && !esDniRegistrado);
+		    System.out.println("Inserte el DNI del paciente: ");
+
+		    Scanner scDni = new Scanner(System.in);
+		    dni = scDni.nextLine().toUpperCase();
+
+		    esDniValido = TratamientoFichero.esDniValido(dni);
+		    esDniRegistrado = TratamientoFichero.esDniRegistrado(dni);
+
+		    if (!esDniValido) {
+		        System.out.println("El DNI introducido no es válido");
+		    } else if (esDniRegistrado) {
+		        System.out.println("El DNI introducido ya se encuentra registrado en nuestro sistema");
+		        Menu.menuPacienteRegistrado(dni);
+		    }
+
+		} while (!esDniValido && esDniRegistrado);
 		
 		System.out.println("Introduzca el nombre");
 		Scanner scNombre = new Scanner(System.in);
@@ -136,7 +132,7 @@ public class Paciente extends Persona {
 		
 		System.out.println("Introduzca el codigo postal");
 		Scanner scCodPostal = new Scanner(System.in);
-		String codPostal = scCodPostal.nextLine();
+		String codigoPostal = scCodPostal.nextLine();
 		
 		/**
 		 * Objeto paciente con parámetros 
@@ -145,6 +141,7 @@ public class Paciente extends Persona {
 		Paciente paciente = new Paciente(nombre, edad, calle, localidad,
 				codPostal,dni, sexoStr);
 		PersonaApp_Scanner.pacientes.add(paciente);
+		TestConexion.consultaInsertPaciente(nombre, edad, calle, localidad, codigoPostal, dni, sexoStr, 0.1, 0.1);
 		visita.registroVisita(dni);
 	}//registroPaciente
 

@@ -8,20 +8,29 @@ public class Menu {
 	static Paciente paciente = new Paciente();
 	static Visita visita = new Visita();
 	static Profesionales_Medicos medico = new Profesionales_Medicos();
+	static TestConexion testConexion = new TestConexion();
 	
 	/**
 	 * Método main
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Date fechaTest = new Date();
-		Profesionales_Medicos medicoTest = new Profesionales_Medicos(0,"Manuel","Garcia","48556729Q","Almoradi","649023984","General");
-		Paciente pacienteTest = new Paciente("Paco",36,"Mayor,12","Almoradi","03310", "48556729A", "hombre", 80.3,1.75);
-		Visita visitaTest = new Visita(fechaTest,"48556729Q","48556729A","Sobrepeso");
-		PersonaApp_Scanner.pacientes.add(pacienteTest);
+		//Date fechaTest = new Date();
+		//TestConexion.consulta_insert (20,"Juan", "Santos", "48556729Z", "Rojales", "649023982", "Medicina General");
+		//TestConexion.consulta_insert (22,"Ramon", "Minguez", "48556729S", "Catral", "649023984", "Nefrologia");
+		
+		
+		//Profesionales_Medicos medicoTest = new Profesionales_Medicos(0,"Manuel","Garcia","48556729Q","Almoradi","649023984","General");
+		//Paciente pacienteTest = new Paciente("Paco",36,"Mayor,12","Almoradi","03310", "48556729A", "hombre", 80.3,1.75);
+		//Visita visitaTest = new Visita(fechaTest,"48556729Q","48556729A","Sobrepeso");
+		/*PersonaApp_Scanner.pacientes.add(pacienteTest);
 		PersonaApp_Scanner.medicos.add(medicoTest);
-		PersonaApp_Scanner.visitas.add(visitaTest);
+		PersonaApp_Scanner.visitas.add(visitaTest);*/
 		//Acceso a menu inicial
+		TestConexion.consultaSelectPaciente();
+		TestConexion.consultaSelectPersonal();
+		TestConexion.consultaSelectVisita();
+		System.out.println(PersonaApp_Scanner.pacientes.get(0).getNombre());
 		menuInicial();		
 	}//main
 
@@ -136,7 +145,7 @@ public class Menu {
 				visita.historialVisitasDni();
 				break;
 			case 2:
-				visita.historialVisitasFecha();
+				//visita.historialVisitasFecha();
 				break;
 			case 3:
 				menuInicial();

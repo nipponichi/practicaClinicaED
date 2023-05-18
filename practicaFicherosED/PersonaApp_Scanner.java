@@ -10,7 +10,7 @@ public class PersonaApp_Scanner {
 	static ArrayList <Paciente> pacientes = new ArrayList <Paciente>();
 	static ArrayList <Visita> visitas = new ArrayList <Visita>();
 	static ArrayList <Profesionales_Medicos> medicos = new ArrayList <Profesionales_Medicos>();
-	
+
 
 	
 	/**

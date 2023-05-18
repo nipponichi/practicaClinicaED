@@ -2,11 +2,14 @@ package practicaFicherosED;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Visita {
-	private Date fecha;
+	private String fecha;
 	private String dniDoctor;
 	private String dniPaciente;
 	private String resultado;
@@ -15,7 +18,7 @@ public class Visita {
 		
 	}
 	
-	public Visita(Date fecha, String dniDoctor, String dniPaciente, 
+	public Visita(String fecha, String dniDoctor, String dniPaciente, 
 			String resultado) {
 		this.fecha = fecha;
 		this.dniDoctor = dniDoctor;
@@ -23,11 +26,11 @@ public class Visita {
 		this.resultado = resultado;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
@@ -71,7 +74,6 @@ public class Visita {
 		Visita visita;
 		String dniDoctor;
 		String resultado;
-		String dni;
 		
 		
 		if (dniPaciente == null) {
@@ -84,18 +86,19 @@ public class Visita {
 			    System.out.println("Inserte el dni del paciente: ");
 			  
 			    Scanner scDni = new Scanner(System.in);
-			    dni = scDni.nextLine().toUpperCase();
+			    dniPaciente = scDni.nextLine().toUpperCase();
 			  
-			    esDniValido = TratamientoFichero.esDniValido(dni);
-			    esDniRegistrado = TratamientoFichero.esDniRegistrado(dni);
+			    esDniValido = TratamientoFichero.esDniValido(dniPaciente);
+			    esDniRegistrado = TratamientoFichero.esDniRegistrado(dniPaciente);
 			  
 			    if (!esDniValido) {
 			        System.out.println("El dni introducido no es valido");
 			    } else if (!esDniRegistrado) {
 			    	System.out.println("El dni introducido no se encuentra en"
 			    			+ " nuestro registro");
+			    	Menu.menuPacienteNoRegistrado();
 			    } else {	
-			        paciente = paciente.selectorPaciente(dni);
+			        paciente = paciente.selectorPaciente(dniPaciente);
 			    }
 			} while (!esDniValido || !esDniRegistrado);
 		} else {
@@ -109,23 +112,25 @@ public class Visita {
 			Scanner scAltura = new Scanner(System.in);
 			double altura = scAltura.nextDouble();
 			
-			Date fecha = new Date();
+			LocalDateTime fecha = LocalDateTime.now();
+			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm");
+			fecha.format(formatters).toString();
 			dniDoctor = medico.asignarMedico();
 			resultado = PersonaApp_Scanner.MuestraMensajePeso(paciente);
+			TestConexion.consultaInsertVisita(fecha, dniPaciente, dniDoctor, resultado);
 			/**
 			 * Declaracion objeto Paciente 
 			 * para guardar visitas.
 			 */
-			visita = new Visita(fecha,dniDoctor, 
-					dniPaciente, resultado);
+			visita = new Visita(fecha.toString(),dniDoctor,dniPaciente, resultado);
+			
 			paciente.setPeso(peso);
 			paciente.setAltura(altura);
+			TestConexion.consultaUpdatePaciente(dniPaciente, peso, altura);
 			PersonaApp_Scanner.pacientes.add(paciente);
 			System.out.println("Dni: "+paciente.getDni() + " Nombre: "+paciente.getNombre()
 				+" peso: "+paciente.getPeso() + " Altura: " + paciente.getAltura());
 			PersonaApp_Scanner.visitas.add(visita);
-			System.out.println("Fecha: "+visita.getFecha()
-			+" dniDoctor: "+visita.getDniDoctor() + " Resultado: " + visita.getResultado());
 			Menu.menuInicial();
 			//Mostramos el resultado de la visita
 			
@@ -137,8 +142,8 @@ public class Visita {
 	/**
 	 * 
 	 */
-	@SuppressWarnings("resource")
-	public void historialVisitasFecha() {
+	//@SuppressWarnings("resource")
+	/*public void historialVisitasFecha() {
 		Profesionales_Medicos medico = new Profesionales_Medicos();
 		Visita visita = new Visita();
 		SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy"); 
@@ -184,7 +189,7 @@ public class Visita {
                 System.out.println("Ha seleccionado al Dr. " + medico.getApellidos());
                 break;
             } else if (opcion != 0) {
-                System.out.println("Opción inválida. Intente nuevamente.");
+                System.out.println("Opcion no valida. Intentelo de nuevo.");
             } else if (opcion == 0) {
             	Menu.menuHistorial();
             }
@@ -209,7 +214,7 @@ public class Visita {
 		    }
 		}
 		Menu.menuHistorial();
-	}
+	}*/
 	
 	/**
 	 * 
@@ -261,7 +266,7 @@ public class Visita {
                 System.out.println("Ha seleccionado al Dr. " + medico.getApellidos());
                 break;
             } else if (opcion != 0) {
-                System.out.println("Opción inválida. Intente nuevamente.");
+                System.out.println("Opcion no valida. Intentelo de nuevo.");
             } else if (opcion == 0) {
             	Menu.menuHistorial();
             }
