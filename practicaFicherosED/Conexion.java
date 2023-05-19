@@ -6,11 +6,11 @@ import java.sql.SQLException;
 
 public class Conexion {
 
-	private static final String NOMBRE_BD = "bd_dietcontroller";
-	private static final String UBICACION = "localhost";
-	private static final String PUERTO = "3306";
-	private static final String USUARIO = "newuser";
-	private static final String CLAVE = "0okmnbvC.";
+	private static String NOMBRE_BD = Configuracion.getNombreBBDD();
+	private static String UBICACION = Configuracion.getUbicacion();
+	private static String PUERTO = Configuracion.getPuerto();
+	private static String USUARIO = Configuracion.getUsuario();
+	private static String CLAVE = Configuracion.getClave();
 
 	// Para versión mysql-conector-java-5.1.6.jar + mysql Server 5.7
 	private static final String CONTROLADOR = "com.mysql.jdbc.Driver";

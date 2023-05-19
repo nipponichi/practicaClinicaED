@@ -3,17 +3,18 @@ package practicaFicherosED;
 import java.util.Scanner;
 
 public class Menu {
-	//static PersonaApp_Scanner personaApp = new PersonaApp_Scanner();
 	static Paciente paciente = new Paciente();
 	static Visita visita = new Visita();
 	static Profesionales_Medicos medico = new Profesionales_Medicos();
 	static TestConexion testConexion = new TestConexion();
-	
+	static Configuracion configuracion = new Configuracion();
+	private static final String PASSWORD = "1234"; 
 	/**
 	 * Método main
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		configuracion.leerConfiguracion();
 		TestConexion.consultaSelectPaciente();
 		TestConexion.consultaSelectPersonal();
 		TestConexion.consultaSelectVisita();
@@ -33,7 +34,8 @@ public class Menu {
 				+ "\n1. Pacientes"
 				+ "\n2. Personal"
 				+ "\n3. Historial"
-				+ "\n4. Salir.");
+				+ "\n4. Configuracion"
+				+ "\n5. Salir.");
 		Scanner scSeleccion = new Scanner(System.in);
 		int seleccion = scSeleccion.nextInt();
 		switch(seleccion){
@@ -47,6 +49,17 @@ public class Menu {
 				menuHistorial();
 				break;
 			case 4:
+				System.out.println("Acceso restringido."
+						+ " Inserte password (1234)");
+				Scanner scPass = new Scanner(System.in);
+				String usuarioPass = scPass.nextLine();
+				if (usuarioPass.equals(PASSWORD)) {
+					menuConfiguracion();
+					} else {
+					System.out.println("Acceso denegado");		
+				}
+				break;	
+			case 5:
 				System.out.println("Gracias por utilizar nuestro software");
 				System.exit(0);
 				break;
@@ -225,5 +238,67 @@ public class Menu {
 			}
 		scSeleccion.close();
 	} while (esMenu == true);
-	}	
+	}
+	
+	/**
+	 * 
+	 */
+	
+	@SuppressWarnings("resource")
+	public static void menuConfiguracion() {
+		String parametro;
+		Scanner scParametro = new Scanner(System.in);
+		boolean esMenu = false;
+		do {
+		System.out.println("**********************\nMenu Configuracion"
+				+ "\n**********************"
+				+ "\n1.	Configurar nombre BBDD"
+				+ "\n2.	Configurar Ubicacion"
+				+ "\n3.	Configurar Puerto"
+				+ "\n4.	Configurar Usuario"
+				+ "\n5.	Configurar Clave"
+				+ "\n6. Volver a inicio.");
+		Scanner scSeleccion = new Scanner(System.in);
+		int seleccion = scSeleccion.nextInt();
+		switch(seleccion){
+			case 1:
+				System.out.println("Inserta el nuevo nombre BBDD:");
+				parametro = scParametro.nextLine();
+				configuracion.modificarConfiguracion(parametro);
+				break;
+			case 2:
+				System.out.println("Inserta la nueva ubicacion:");
+				parametro = scParametro.nextLine();
+				configuracion.modificarConfiguracion(parametro);
+				break;
+			case 3:
+				System.out.println("Inserta el nuevo puerto:");
+				parametro = scParametro.nextLine();
+				configuracion.modificarConfiguracion(parametro);
+				break;
+			case 4:
+				System.out.println("Inserta el nuevo usuario:"
+						+ " (recuerda modificar la clave de acceso)");
+				parametro = scParametro.nextLine();
+				configuracion.modificarConfiguracion(parametro);
+				break;
+			case 5:
+				System.out.println("Inserta la nueva clave:");
+				parametro = scParametro.nextLine();
+				configuracion.modificarConfiguracion(parametro);
+				break;
+			case 6:
+				parametro = scParametro.nextLine();
+				menuInicial();
+				break;
+			default:
+				esMenu = true;
+				System.out.println("Opcion no valida\n por favor,"
+						+ " seleccione una opcion entre las disponibles");
+				break;
+			}
+		scSeleccion.close();
+	} while (esMenu == true);	
+
+	}
 }
