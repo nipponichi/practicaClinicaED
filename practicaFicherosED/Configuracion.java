@@ -61,8 +61,9 @@ public class Configuracion {
 		Configuracion.clave = clave;
 	}
 	
-    //Determina las rutas de los archivos para utilizar en otros metodos del 
-    //programa
+	/**
+	 * 
+	 */
     public static void leerConfiguracion(){
 		String rutaConfiguracion = "C:\\Users\\Javier\\eclipse-workspace\\practicaFicherosED2\\src\\almacenamiento\\configuracion.txt";
 		File listadoParametrosF = new File(rutaConfiguracion);

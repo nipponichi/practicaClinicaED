@@ -120,10 +120,12 @@ public class Profesionales_Medicos extends Persona {
 	 * Asigna profesional medico automáticamente
 	 * @return
 	 */
-    public String asignarMedico() {
+    public Profesionales_Medicos asignarMedico() {
     	int posicion = PersonaApp_Scanner.medicos.size();
         Random random = new Random();
         int posicionAleatoria = random.nextInt(posicion);
-        return PersonaApp_Scanner.medicos.get(posicionAleatoria).getDni();
+        Profesionales_Medicos profMedico = new Profesionales_Medicos();
+        profMedico = PersonaApp_Scanner.medicos.get(posicionAleatoria);      
+        return profMedico;
     }	
 }

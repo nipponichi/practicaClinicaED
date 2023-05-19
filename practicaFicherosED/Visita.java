@@ -79,17 +79,17 @@ public class Visita {
 		
 		boolean esDniValido = false, esDniRegistrado = false;
 		Visita visita;
+		Profesionales_Medicos profMedico = new Profesionales_Medicos();
 		String dniDoctor;
 		String resultado;
 		
 		
 		if (dniPaciente == null) {
-
-			System.out.println("********************************\n"
-					+ "Registro de nueva visita"
-					+ "\n********************************");
 		
 			do {
+				System.out.println("********************************\n"
+						+ "Registro de nueva visita"
+						+ "\n********************************");
 			    System.out.println("Inserte el dni del paciente: ");
 			  
 			    Scanner scDni = new Scanner(System.in);
@@ -111,6 +111,11 @@ public class Visita {
 		} else {
 			paciente = paciente.selectorPaciente(dniPaciente);
 		}
+			
+			profMedico = medico.asignarMedico();
+			dniDoctor = profMedico.getDni();
+			
+			System.out.println("El Dr."+ profMedico.getApellidos()+ " esta asignado a esta consulta.");
 			System.out.println("Introduzca el peso en kilogramos");
 			Scanner scPeso = new Scanner(System.in);
 			double peso = scPeso.nextDouble();
@@ -125,7 +130,6 @@ public class Visita {
 			SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm");
 			String fechaStr = sdfFecha.format(fecha);
 			String horaStr = sdfHora.format(hora);
-			dniDoctor = medico.asignarMedico();
 			resultado = PersonaApp_Scanner.MuestraMensajePeso(paciente);
 			TestConexion.consultaInsertVisita(fechaStr, horaStr, dniPaciente, dniDoctor, resultado);
 			/**
@@ -142,7 +146,8 @@ public class Visita {
 			
 			PersonaApp_Scanner.pacientes.add(paciente);
 			System.out.println("Dni: "+paciente.getDni() + " Nombre: "+paciente.getNombre()
-				+" peso: "+paciente.getPeso() + " Altura: " + paciente.getAltura());
+				+" peso: "+paciente.getPeso() + " Altura: " + paciente.getAltura() 
+				+ " Resultado: " +visita.getResultado());
 			PersonaApp_Scanner.visitas.add(visita);
 			Menu.menuInicial();
 			//Mostramos el resultado de la visita
