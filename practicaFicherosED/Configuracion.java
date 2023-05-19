@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 
 public class Configuracion {
@@ -62,7 +63,7 @@ public class Configuracion {
 	
     //Determina las rutas de los archivos para utilizar en otros metodos del 
     //programa
-    public void leerConfiguracion(){
+    public static void leerConfiguracion(){
 		String rutaConfiguracion = "C:\\Users\\Javier\\eclipse-workspace\\practicaFicherosED2\\src\\almacenamiento\\configuracion.txt";
 		File listadoParametrosF = new File(rutaConfiguracion);
                 FileReader listadoParametrosFR = null;
@@ -107,15 +108,44 @@ public class Configuracion {
 	 */
 
 
-    public void modificarConfiguracion(String parametro) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(RUTA_CONF))) {
-            bw.write(parametro);
-            bw.newLine();
-            System.out.println("Archivo actualizado con exito");
-        } catch (IOException e) {
-            System.out.println("Error al escribir el parámetro en el archivo");
-        }
-        Menu.menuConfiguracion();
+@SuppressWarnings("resource")
+public void guardarConfiguracion() {
+	
+    Scanner parametro = new Scanner(System.in);
+
+    System.out.println("Introduce el nombre de la base de datos:");
+    nombreBBDD = parametro.nextLine();
+
+    System.out.println("Introduce la ubicacion:");
+    ubicacion = parametro.nextLine();
+
+    System.out.println("Introduce el puerto:");
+    puerto = parametro.nextLine();
+
+    System.out.println("Introduce el usuario:");
+    usuario = parametro.nextLine();
+
+    System.out.println("Introduce la clave:");
+    clave = parametro.nextLine();
+    
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(RUTA_CONF))) {
+        bw.write(nombreBBDD+"|");
+        bw.newLine();
+        bw.write(ubicacion+"|");
+        bw.newLine();
+        bw.write(puerto+"|");
+        bw.newLine();
+        bw.write(usuario+"|");
+        bw.newLine();
+        bw.write(clave+"|");
+        bw.newLine();
+        System.out.println("Configuracion guardada con exito.");
+    } catch (IOException e) {
+        System.out.println("Error al guardar la configuración.");
+    } finally {
+    	System.out.println("Reinicie el programa.");
+    	System.exit(0);
     }
+}
 
 }

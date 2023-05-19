@@ -244,51 +244,21 @@ public class Menu {
 	 * 
 	 */
 	
-	@SuppressWarnings("resource")
 	public static void menuConfiguracion() {
-		String parametro;
-		Scanner scParametro = new Scanner(System.in);
+
 		boolean esMenu = false;
 		do {
 		System.out.println("**********************\nMenu Configuracion"
 				+ "\n**********************"
-				+ "\n1.	Configurar nombre BBDD"
-				+ "\n2.	Configurar Ubicacion"
-				+ "\n3.	Configurar Puerto"
-				+ "\n4.	Configurar Usuario"
-				+ "\n5.	Configurar Clave"
-				+ "\n6. Volver a inicio.");
+				+ "\n1. Configurar campos"
+				+ "\n2. Volver a inicio.");
 		Scanner scSeleccion = new Scanner(System.in);
 		int seleccion = scSeleccion.nextInt();
 		switch(seleccion){
 			case 1:
-				System.out.println("Inserta el nuevo nombre BBDD:");
-				parametro = scParametro.nextLine();
-				configuracion.modificarConfiguracion(parametro);
+				configuracion.guardarConfiguracion();
 				break;
 			case 2:
-				System.out.println("Inserta la nueva ubicacion:");
-				parametro = scParametro.nextLine();
-				configuracion.modificarConfiguracion(parametro);
-				break;
-			case 3:
-				System.out.println("Inserta el nuevo puerto:");
-				parametro = scParametro.nextLine();
-				configuracion.modificarConfiguracion(parametro);
-				break;
-			case 4:
-				System.out.println("Inserta el nuevo usuario:"
-						+ " (recuerda modificar la clave de acceso)");
-				parametro = scParametro.nextLine();
-				configuracion.modificarConfiguracion(parametro);
-				break;
-			case 5:
-				System.out.println("Inserta la nueva clave:");
-				parametro = scParametro.nextLine();
-				configuracion.modificarConfiguracion(parametro);
-				break;
-			case 6:
-				parametro = scParametro.nextLine();
 				menuInicial();
 				break;
 			default:

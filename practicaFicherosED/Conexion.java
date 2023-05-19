@@ -55,6 +55,7 @@ public class Conexion {
 			// TODO Auto-generated catch block
 			System.out.println("Error en la conexión");
 			e.printStackTrace();
+			Menu.menuConfiguracion();
 		}
 
 		return conexion;
