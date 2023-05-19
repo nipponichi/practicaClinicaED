@@ -2,14 +2,12 @@ package practicaFicherosED;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Visita {
-	private String fecha;
+	private Date fecha;
+	private Date hora;
 	private String dniDoctor;
 	private String dniPaciente;
 	private String resultado;
@@ -18,20 +16,29 @@ public class Visita {
 		
 	}
 	
-	public Visita(String fecha, String dniDoctor, String dniPaciente, 
+	public Visita(Date fecha, Date hora, String dniDoctor, String dniPaciente, 
 			String resultado) {
 		this.fecha = fecha;
+		this.hora = hora;
 		this.dniDoctor = dniDoctor;
 		this.dniPaciente = dniPaciente;
 		this.resultado = resultado;
 	}
 
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+	
+	public Date getHora() {
+		return hora;
+	}
+
+	public void setHora(Date hora) {
+		this.hora = hora;
 	}
 
 	public String getDniDoctor() {
@@ -112,21 +119,27 @@ public class Visita {
 			Scanner scAltura = new Scanner(System.in);
 			double altura = scAltura.nextDouble();
 			
-			LocalDateTime fecha = LocalDateTime.now();
-			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm");
-			fecha.format(formatters).toString();
+			Date fecha = new Date();
+			Date hora = new Date();
+			SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/YYYY");
+			SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm");
+			String fechaStr = sdfFecha.format(fecha);
+			String horaStr = sdfHora.format(hora);
 			dniDoctor = medico.asignarMedico();
 			resultado = PersonaApp_Scanner.MuestraMensajePeso(paciente);
-			TestConexion.consultaInsertVisita(fecha, dniPaciente, dniDoctor, resultado);
+			TestConexion.consultaInsertVisita(fechaStr, horaStr, dniPaciente, dniDoctor, resultado);
 			/**
 			 * Declaracion objeto Paciente 
 			 * para guardar visitas.
 			 */
-			visita = new Visita(fecha.toString(),dniDoctor,dniPaciente, resultado);
+			visita = new Visita(fecha, hora, dniDoctor,dniPaciente, resultado);
 			
+			//Actualizamos objeto paciente con peso y altura
 			paciente.setPeso(peso);
 			paciente.setAltura(altura);
+			
 			TestConexion.consultaUpdatePaciente(dniPaciente, peso, altura);
+			
 			PersonaApp_Scanner.pacientes.add(paciente);
 			System.out.println("Dni: "+paciente.getDni() + " Nombre: "+paciente.getNombre()
 				+" peso: "+paciente.getPeso() + " Altura: " + paciente.getAltura());
@@ -142,8 +155,8 @@ public class Visita {
 	/**
 	 * 
 	 */
-	//@SuppressWarnings("resource")
-	/*public void historialVisitasFecha() {
+	@SuppressWarnings("resource")
+	public void historialVisitasFecha() {
 		Profesionales_Medicos medico = new Profesionales_Medicos();
 		Visita visita = new Visita();
 		SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy"); 
@@ -214,7 +227,7 @@ public class Visita {
 		    }
 		}
 		Menu.menuHistorial();
-	}*/
+	}
 	
 	/**
 	 * 

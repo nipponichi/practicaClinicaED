@@ -5,7 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -101,7 +102,7 @@ public class TestConexion {
 				double altura = rs.getDouble(9);
 				
 				Paciente paciente = new Paciente(nombre, edad, calle, localidad, codigoPostal, dni, sexo, peso, altura);
-				System.out.println(paciente.getNombre());
+				//Añadimos de objeto paciente a arraylist de pacientes
 				PersonaApp_Scanner.pacientes.add(paciente);
 			}
 		} catch (SQLException e) { // TODO: handle exception
@@ -117,6 +118,8 @@ public class TestConexion {
 		Connection cn = null;
 		Statement stm = null;
 		ResultSet rs = null;
+		SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm");
 		selectTableSQL = "SELECT * FROM Visita";       	
 		try {
 			// Abrimos la conexion con la base de datos
@@ -124,17 +127,29 @@ public class TestConexion {
 			stm = cn.createStatement();
 			// Pasamos la consulta al ResultSet
 			rs = stm.executeQuery(selectTableSQL);
-
+			Date fecha = null;
+			Date hora = null;
+			
 			while (rs.next()) {
 				
-				String fecha = rs.getString(1);
-				String dniPaciente = rs.getString(2);
-				String dniPersonal = rs.getString(3);
-				String resultado = rs.getString(4);
+				String fechaStr = rs.getString(1);
+				String horaStr = rs.getString(2);
+				String dniPaciente = rs.getString(3);
+				String dniPersonal = rs.getString(4);
+				String resultado = rs.getString(5);
+				
+
+				try {
+					fecha = sdfFecha.parse(fechaStr);
+					hora = sdfHora.parse(horaStr);
+				} catch (ParseException e) {
+					System.out.println("La fecha introducida no es un formato valido");
+					e.printStackTrace();
+				}
 				
 				
 				
-				Visita visita = new Visita(fecha, dniPaciente, dniPersonal, resultado);
+				Visita visita = new Visita(fecha, hora, dniPaciente, dniPersonal, resultado);
 				PersonaApp_Scanner.visitas.add(visita);
 			}
 		} catch (SQLException e) { // TODO: handle exception
@@ -259,7 +274,7 @@ public class TestConexion {
 
 	}
 	
-	public static void consultaInsertVisita(LocalDateTime fecha, String dniPaciente, String dniPersonal, String resultado) {
+	public static void consultaInsertVisita(String fecha, String hora, String dniPaciente, String dniPersonal, String resultado) {
 
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -267,17 +282,18 @@ public class TestConexion {
 
 		// int id_usuario=null;
 		// Crear sentencia SQL para insertar en la base de datos
-		insertTableSQL = "INSERT INTO Visita (fecha,dniPaciente,dniPersonal,resultado) VALUES (?,?,?,?)";
+		insertTableSQL = "INSERT INTO Visita (fecha, hora, dniPaciente,dniPersonal,resultado) VALUES (?,?,?,?,?)";
 
 		try {
 
 			cn = conexion.conectar();
 			ps = cn.prepareStatement(insertTableSQL);
 
-			ps.setString(1, fecha.toString());
-	        ps.setString(2, dniPaciente);
-	        ps.setString(3, dniPersonal);
-	        ps.setString(4, resultado);
+			ps.setString(1, fecha);
+			ps.setString(2, hora);
+	        ps.setString(3, dniPaciente);
+	        ps.setString(4, dniPersonal);
+	        ps.setString(5, resultado);
 
 			ps.executeUpdate();
 

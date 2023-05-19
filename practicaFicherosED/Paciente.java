@@ -1,4 +1,4 @@
-		package practicaFicherosED;
+package practicaFicherosED;
 
 import java.util.Scanner;
 
@@ -118,9 +118,10 @@ public class Paciente extends Persona {
 			
 		System.out.println("Introduzca el sexo");
 		Scanner scSexo = new Scanner(System.in);
-		char sexo = scSexo.nextLine().charAt(0);
+		char sexo = scSexo.nextLine().toUpperCase().charAt(0);
 		persona.comprobarSexo(sexo);
-		String sexoStr = persona.determinarSexo(Character.toString(sexo));
+		String sexoStr = persona.determinarSexo(sexo);
+		System.out.println(sexoStr);
 		
 		System.out.println("Introduzca la calle");
 		Scanner scCalle = new Scanner(System.in);
@@ -194,7 +195,8 @@ public class Paciente extends Persona {
 	}//selectorPaciente
 	
 	/**
-	 * Método
+	 * Menú alternativo para al registrar una nueva visita, no reconocer
+	 * el dni introducido por teclado por el usuario
 	 */
 	@SuppressWarnings("resource")
 	public void registroAuxiliar() {

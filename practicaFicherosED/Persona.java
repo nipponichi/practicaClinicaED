@@ -163,13 +163,13 @@ public class Persona {
 	  * @param sexo
 	  * @return
 	  */
-	 public String determinarSexo(String sexo) {
-			if (sexo.equals("H")) {
-				return "Hombre";
-			} else {
-				return "Mujer";
-			}
-	}
+	 public String determinarSexo(char sexo) {
+		    if (sexo == 'H') {
+		        return "Hombre";
+		    } else {
+		        return "Mujer";
+		    }
+		}
 	 
 	 /**
 	  * Método para representar los parámetros de los atributos del objeto Persona.

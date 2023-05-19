@@ -24,11 +24,12 @@ altura double NOT NULL,
 PRIMARY KEY (dni));
 
 CREATE TABLE IF NOT EXISTS visita (
-fecha DATETIME NOT NULL,
-dnipersonal VARCHAR (10),
-dnipaciente VARCHAR (10),
-resultado VARCHAR (50),
-PRIMARY KEY (dnipersonal,dnipaciente));
+fecha VARCHAR (255) NOT NULL,
+hora VARCHAR (255) NOT NULL,
+dnipersonal VARCHAR (10) NOT NULL,
+dnipaciente VARCHAR (10) NOT NULL,
+resultado VARCHAR (50) NOT NULL,
+PRIMARY KEY (fecha,dnipaciente));
 
 
 INSERT INTO paciente (nombre,edad,calle,localidad,codpostal,dni,sexo,peso,altura)
@@ -41,7 +42,7 @@ VALUES 	(10,'Marcos', 'Garcia', '48556729A', 'Almoradi', '649023981', 'Medicina 
         (13,'Ramon', 'Minguez', '48556729S', 'Catral', '649023984', 'Nefrologia'),
         (14,'Antonio', 'Perez', '48556729X', 'Arneva', '649023985', 'Pediatria');
         
-        DROP TABLE paciente;
+        DROP TABLE visita;
         
         
         
@@ -51,3 +52,5 @@ SELECT * FROM paciente;
 
 SELECT * FROM visita;
 
+DELETE FROM personal
+WHERE codigo = 22;
