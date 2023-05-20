@@ -124,7 +124,7 @@ public class TestConexion {
 			cerrar_conexion3(cn, stm, rs);
 			//System.out.println("Paciente(s) cargado(s) con exito");
 		}
-	}
+	}//ConsultaSelectPaciente
 	
 
 	/**
@@ -314,7 +314,7 @@ public class TestConexion {
 
 		}
 
-	}
+	}//ConsultaInsertPaciente
 	
 	/**
 	 * Método de guardado de visitas en tabla Visitas de BBDD
@@ -372,7 +372,7 @@ public class TestConexion {
 
 		}
 
-	}
+	}//ConsultaInsertVisita
 
 	/**
 	 * Metodo de actualización de parámetros peso y altura en BBDD tras visita de paciente 
@@ -424,5 +424,5 @@ public class TestConexion {
 
 		}
 
-	}
+	}//ConsultaUpdatePaciente
 }
