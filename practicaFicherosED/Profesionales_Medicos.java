@@ -3,12 +3,6 @@ package practicaFicherosED;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * Falta comprobar si dni esta registrado o es valido para doctor
- * podria ser herencia de persona?
- * @author Javier
- *
- */
 
 public class Profesionales_Medicos extends Persona {
 	private int codigo; 
@@ -86,6 +80,9 @@ public class Profesionales_Medicos extends Persona {
 		this.especialidad = especialidad;
 	}
 	
+	/**
+	 * Método formulario de registro de nuevos pacientes
+	 */
 	@SuppressWarnings("resource")
 	public void registroPersonal() {
 		Profesionales_Medicos medico;

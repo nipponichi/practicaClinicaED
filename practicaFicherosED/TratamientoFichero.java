@@ -3,6 +3,11 @@ package practicaFicherosED;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Clase TratamientoFichero, donde realizamos las comprobaciones de la documentación aportada por el cliente
+ * @author Javier
+ *
+ */
 public class TratamientoFichero {
 	static PersonaApp_Scanner personaApp = new PersonaApp_Scanner();
 	static Paciente paciente = new Paciente();
@@ -24,20 +29,6 @@ public class TratamientoFichero {
 		return false;
 	} //esDniRegistrado
 	
-	/**
-	 * Comprobamos si el cliente ha sido registrado en Visitas
-	 * @param dni
-	 */
-	public static boolean esHistorico (String dni) {
-		int posicion = PersonaApp_Scanner.visitas.size();
-		for (int i = 0; i < posicion; i++) {
-			if(PersonaApp_Scanner.visitas.get(i).getDniPaciente().equals(dni)){
-				return true;
-			}
-		}
-		return false;
-	}//esHistorico
-
 	/**
 	 * Comprueba si el formato del dni corresponde al estandar
 	 * comparando con un patron que exige 7 u8 cifras y una letra.

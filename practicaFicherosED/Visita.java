@@ -5,6 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * Clase visita para tratamiento de parámetros en el registro de visitas
+ * @author Javier
+ *
+ */
 public class Visita {
 	private Date fecha;
 	private Date hora;
@@ -157,8 +162,10 @@ public class Visita {
 			//TratamientoFichero.grabarCliente(pacienteVisita,esVisita, esPacienteNuevo);
 		
 	}//registroVisita
+	
 	/**
-	 * 
+	 * Método para mostrar introduciendo una fecha por teclado y seleccionando una opción de un listado de profesionales,
+	 * las visitas que han tenido lugar en una fecha determinada por un profesional seleccionado.
 	 */
 	@SuppressWarnings("resource")
 	public void historialVisitasFecha() {
@@ -232,10 +239,12 @@ public class Visita {
 		    }
 		}
 		Menu.menuHistorial();
-	}
+	}//histroialVisitasFecha
 	
 	/**
-	 * 
+	 * Método para mostrar, introduciendo por teclado el dni del paciente y seleccionando
+	 * a un doctor entre un listado de posibles, mostrando en su resultado
+	 * las consultas en las que han intervenido ambos individuos.
 	 */
 	@SuppressWarnings("resource")
 	public void historialVisitasDni() {
@@ -309,6 +318,6 @@ public class Visita {
         }
         Menu.menuHistorial();
     }
-}
+}//historialVisitasDni
 
 

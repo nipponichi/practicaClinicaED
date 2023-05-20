@@ -8,7 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-
+/**
+ * Clase configuracion
+ * @author Javier
+ *
+ */
 public class Configuracion {
 	private static final String RUTA_CONF = "C:\\Users\\Javier\\eclipse-workspace\\practicaFicherosED2\\src\\almacenamiento\\configuracion.txt";
 	private static String nombreBBDD;
@@ -62,7 +66,8 @@ public class Configuracion {
 	}
 	
 	/**
-	 * 
+	 * Método de lectura de fichero configuracion.txt donde recogemos los valores que serviran como
+	 * acceso para la conexion entre el programa y la base de datos
 	 */
     public static void leerConfiguracion(){
 		String rutaConfiguracion = "C:\\Users\\Javier\\eclipse-workspace\\practicaFicherosED2\\src\\almacenamiento\\configuracion.txt";
@@ -107,46 +112,44 @@ public class Configuracion {
 	/**
 	 * Método de escritura de archivos: configuracion.txt.
 	 */
-
-
-@SuppressWarnings("resource")
-public void guardarConfiguracion() {
+	@SuppressWarnings("resource")
+	public void guardarConfiguracion() {
+		
+	    Scanner parametro = new Scanner(System.in);
 	
-    Scanner parametro = new Scanner(System.in);
-
-    System.out.println("Introduce el nombre de la base de datos:");
-    nombreBBDD = parametro.nextLine();
-
-    System.out.println("Introduce la ubicacion:");
-    ubicacion = parametro.nextLine();
-
-    System.out.println("Introduce el puerto:");
-    puerto = parametro.nextLine();
-
-    System.out.println("Introduce el usuario:");
-    usuario = parametro.nextLine();
-
-    System.out.println("Introduce la clave:");
-    clave = parametro.nextLine();
-    
-    try (BufferedWriter bw = new BufferedWriter(new FileWriter(RUTA_CONF))) {
-        bw.write(nombreBBDD+"|");
-        bw.newLine();
-        bw.write(ubicacion+"|");
-        bw.newLine();
-        bw.write(puerto+"|");
-        bw.newLine();
-        bw.write(usuario+"|");
-        bw.newLine();
-        bw.write(clave+"|");
-        bw.newLine();
-        System.out.println("Configuracion guardada con exito.");
-    } catch (IOException e) {
-        System.out.println("Error al guardar la configuración.");
-    } finally {
-    	System.out.println("Reinicie el programa.");
-    	System.exit(0);
-    }
-}
+	    System.out.println("Introduce el nombre de la base de datos:");
+	    nombreBBDD = parametro.nextLine();
+	
+	    System.out.println("Introduce la ubicacion:");
+	    ubicacion = parametro.nextLine();
+	
+	    System.out.println("Introduce el puerto:");
+	    puerto = parametro.nextLine();
+	
+	    System.out.println("Introduce el usuario:");
+	    usuario = parametro.nextLine();
+	
+	    System.out.println("Introduce la clave:");
+	    clave = parametro.nextLine();
+	    
+	    try (BufferedWriter bw = new BufferedWriter(new FileWriter(RUTA_CONF))) {
+	        bw.write(nombreBBDD+"|");
+	        bw.newLine();
+	        bw.write(ubicacion+"|");
+	        bw.newLine();
+	        bw.write(puerto+"|");
+	        bw.newLine();
+	        bw.write(usuario+"|");
+	        bw.newLine();
+	        bw.write(clave+"|");
+	        bw.newLine();
+	        System.out.println("Configuracion guardada con exito.");
+	    } catch (IOException e) {
+	        System.out.println("Error al guardar la configuración.");
+	    } finally {
+	    	System.out.println("Reinicie el programa.");
+	    	System.exit(0);
+	    }
+	}
 
 }

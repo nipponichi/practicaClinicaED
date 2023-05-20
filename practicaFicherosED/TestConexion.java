@@ -9,21 +9,26 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+/**
+ * Clase donde se realizan las consultas
+ * pertinentes a BBDD para la obtención de datos en memoria
+ * que la aplicación requiere para trabajar
+ * @author Javier
+ *
+ */
 public class TestConexion {
-	
-	/*
-	  public static void main(String[] args) {
-	  
-	  Conexion conexion = new Conexion(); conexion.conectar();
-	  
-	  }*/
 	 
-
 	private static String selectTableSQL;
 	private static String insertTableSQL;
 	private static String updateTableSQL;
 
+	/**
+	 * Método para cerrar los objetos de la clase
+	 * Connection, Statement y ResulSet
+	 * @param cn
+	 * @param stm
+	 * @param rs
+	 */
 	public static void cerrar_conexion3(Connection cn, Statement stm, ResultSet rs) {
 		// Liberar recursos revisar el orden en el que se cierran, orden inverso
 		try {
@@ -36,7 +41,7 @@ public class TestConexion {
 			if (cn != null) {
 				cn.close();
 			}
-			System.out.println("La conexión se ha cerrado con éxito");
+			//System.out.println("La conexión se ha cerrado con éxito");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println();
@@ -44,6 +49,10 @@ public class TestConexion {
 
 	}
 
+	/**
+	 * Método para realizar consulta de datos a tabla Personal en BBDD
+	 * y carga de ArrayList Personal en la aplicación
+	 */
 	public static void consultaSelectPersonal() {
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -73,10 +82,14 @@ public class TestConexion {
 
 		} finally {
 			cerrar_conexion3(cn, stm, rs);
-			System.out.println("Personal cargado con exito");
+			//System.out.println("Personal cargado con exito");
 		}
 	}
 	
+	/**
+	 * Método para realizar consulta de datos a tabla Paciente en BBDD
+	 * y carga de ArrayList Paciente en la aplicación
+	 */
 	public static void consultaSelectPaciente() {
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -109,10 +122,15 @@ public class TestConexion {
 
 		} finally {
 			cerrar_conexion3(cn, stm, rs);
-			System.out.println("Paciente(s) cargado(s) con exito");
+			//System.out.println("Paciente(s) cargado(s) con exito");
 		}
 	}
 	
+
+	/**
+	 * Método para realizar consulta de datos a tabla Visita en BBDD
+	 * y carga de ArrayList Visitas en la aplicación
+	 */
 	public static void consultaSelectVisita() {
 		Conexion conexion = new Conexion();
 		Connection cn = null;
@@ -156,10 +174,20 @@ public class TestConexion {
 
 		} finally {
 			cerrar_conexion3(cn, stm, rs);
-			System.out.println("Visita(s) cargada(s) con exito");
+			//System.out.println("Visita(s) cargada(s) con exito");
 		}
 	}
 
+	/**
+	 * Método de escritura en BBDD para la tabla Personal
+	 * @param codigo
+	 * @param nombre
+	 * @param apellidos
+	 * @param dni
+	 * @param localidad
+	 * @param telefono
+	 * @param especialidad
+	 */
 	public static void consultaInsertPersonal(int codigo, String nombre, String apellidos, String dni, String localidad,String telefono,String especialidad) {
 
 		Conexion conexion = new Conexion();
@@ -211,6 +239,20 @@ public class TestConexion {
 
 	}
 	
+	/**
+	 * 
+	 * Método de escritura en la tabla Paciente de BBDD.
+	 *
+	 * @param nombre
+	 * @param edad
+	 * @param calle
+	 * @param localidad
+	 * @param codpostal
+	 * @param dni
+	 * @param sexo
+	 * @param peso
+	 * @param altura
+	 */
 	public static void consultaInsertPaciente(String nombre, int edad, String calle, String localidad, String codpostal,
 			String dni, String sexo, Double peso, Double altura) {
 
@@ -228,23 +270,23 @@ public class TestConexion {
 			ps = cn.prepareStatement(insertTableSQL);
 
 			ps.setString(1, nombre);
-			System.out.println(nombre);
+			//System.out.println(nombre);
 			ps.setInt(2, edad);
-			System.out.println(edad);
+			//System.out.println(edad);
 	        ps.setString(3, calle);
-	        System.out.println(calle);
+	        //System.out.println(calle);
 	        ps.setString(4, localidad);
-	        System.out.println(localidad);
+	        //System.out.println(localidad);
 	        ps.setString(5, codpostal);
-	        System.out.println(codpostal);
+	        //System.out.println(codpostal);
 	        ps.setString(6, dni);
-	        System.out.println(dni);
+	        //System.out.println(dni);
 	        ps.setString(7, sexo);
-	        System.out.println(sexo);
+	        //System.out.println(sexo);
 	        ps.setDouble(8, peso);
-	        System.out.println(peso);
+	        //System.out.println(peso);
 	        ps.setDouble(9, altura);
-	        System.out.println(altura);
+	        //System.out.println(altura);
 			ps.executeUpdate();
 
 			System.out.println("El registro ha sido insertado con exito en la base de datos");
@@ -274,6 +316,14 @@ public class TestConexion {
 
 	}
 	
+	/**
+	 * Método de guardado de visitas en tabla Visitas de BBDD
+	 * @param fecha
+	 * @param hora
+	 * @param dniPaciente
+	 * @param dniPersonal
+	 * @param resultado
+	 */
 	public static void consultaInsertVisita(String fecha, String hora, String dniPaciente, String dniPersonal, String resultado) {
 
 		Conexion conexion = new Conexion();
@@ -324,6 +374,12 @@ public class TestConexion {
 
 	}
 
+	/**
+	 * Metodo de actualización de parámetros peso y altura en BBDD tras visita de paciente 
+	 * @param dni
+	 * @param peso
+	 * @param altura
+	 */
 	public static void consultaUpdatePaciente(String dni,double peso, double altura) {
 
 		Conexion conexion = new Conexion();

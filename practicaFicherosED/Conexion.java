@@ -16,20 +16,12 @@ public class Conexion {
 	private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://" + UBICACION + ":" + PUERTO + "/" + NOMBRE_BD
 			+ "?useUnicode=true&characterEncoding=utf-8";
-
-	// RECUERDA CAMBIAR!!
-
-	// Para versión mysql-conector-java-8.0.11.jar + mysql Server 8.0.33
-
-	/* private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
-
 	
-	 private static final String URL = "jdbc:mysql://localhost:3306/" + NOMBRE_BD +
-	 "?useUnicode=true&use" +
-	 "JDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&" +
-	 "serverTimezone=UTC";
+	/**
+	 * Método de conexión con BBDD, donde comprobamos el controlador una 
+	 * única vez y realizamos conexiones a BBDD con un método independiente de 
+	 * esta comprobación
 	 */
-
 	static {
 
 		try {
@@ -49,7 +41,7 @@ public class Conexion {
 			// Establecemos la conexión para eso java nos prporciona conexion =
 			conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
 
-			System.out.println("Conexion correctamente establecida con la base de datos " + NOMBRE_BD);
+			//System.out.println("Conexion correctamente establecida con la base de datos " + NOMBRE_BD);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

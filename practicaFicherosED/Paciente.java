@@ -2,6 +2,11 @@ package practicaFicherosED;
 
 import java.util.Scanner;
 
+/**
+ * Clase Paciente, heredera de Persona.
+ * @author Javier
+ *
+ */
 public class Paciente extends Persona {
 	private String calle;
 	private String codPostal;
@@ -121,7 +126,7 @@ public class Paciente extends Persona {
 		char sexo = scSexo.nextLine().toUpperCase().charAt(0);
 		persona.comprobarSexo(sexo);
 		String sexoStr = persona.determinarSexo(sexo);
-		System.out.println(sexoStr);
+		//System.out.println(sexoStr);
 		
 		System.out.println("Introduzca la calle");
 		Scanner scCalle = new Scanner(System.in);
@@ -141,48 +146,16 @@ public class Paciente extends Persona {
 		 */
 		Paciente paciente = new Paciente(nombre, edad, calle, localidad,
 				codPostal,dni, sexoStr);
-		PersonaApp_Scanner.pacientes.add(paciente);
 		TestConexion.consultaInsertPaciente(nombre, edad, calle, localidad, codigoPostal, dni, sexoStr, 0.1, 0.1);
+		PersonaApp_Scanner.pacientes.add(paciente);
 		visita.registroVisita(dni);
 	}//registroPaciente
-
+	
 	/**
-	 * Método para mostrar historial de visitas de paciente por consola
+	 * Método para seleccionar un paciente tras introducir el dni por teclado
+	 * @param dni
+	 * @return
 	 */
-	@SuppressWarnings("resource")
-	public void historialPaciente() {
-		boolean esDniValido;
-		boolean esDniRegistrado;
-		String dni;
-		do {
-		System.out.println("Inserte el dni del paciente: ");
-		
-		Scanner scDni = new Scanner(System.in);
-		dni = scDni.nextLine().toUpperCase();
-		
-		esDniValido = TratamientoFichero.esDniValido(dni);
-		esDniRegistrado = TratamientoFichero.esDniRegistrado(dni);
-		
-		if (esDniValido == false) {
-			System.out.println("El dni introducido no es valido");
-		} else {
-			
-			if (esDniRegistrado == true) {
-				System.out.println("*******************************\n"
-						+ "Historial de paciente con Dni "+dni+":\n"
-						+ "Para valor IMC:(-1) Infrapeso | (0) "
-						+ "Normopeso | (1) Sobrepeso\n");
-				TratamientoFichero.esHistorico(dni);
-
-			} else {
-				System.out.println("El dni introducido no se"
-						+ "encuentra en el registro de visitas");
-			}
-		}
-		} while (esDniValido == false || esDniRegistrado == false);	
-	}//historialPaciente
-	
-	
 	public Paciente selectorPaciente(String dni) {
 	    int posicion = PersonaApp_Scanner.pacientes.size();
 	    for (int i = 0; i < posicion; i++) {
@@ -194,41 +167,4 @@ public class Paciente extends Persona {
 	    return null;
 	}//selectorPaciente
 	
-	/**
-	 * Menú alternativo para al registrar una nueva visita, no reconocer
-	 * el dni introducido por teclado por el usuario
-	 */
-	@SuppressWarnings("resource")
-	public void registroAuxiliar() {
-		Visita visita = new Visita();
-		boolean esMenu = false;
-		do {
-			System.out.println("El DNI introducido no se encuentra\n"
-					+ "entre nuestros registros.\n"
-					+ "Desea registrar a un nuevo paciente?"
-					+ "\n1. Si"
-					+ "\n2. No, volver a introducir DNI"
-					+ "\n3. Volver a menu inicial");
-	
-			Scanner opcionRegistro = new Scanner(System.in);
-			int seleccionRegistro = opcionRegistro.nextInt();
-			switch (seleccionRegistro) {
-				case 1:
-					registroPaciente();
-					break;
-				case 2:
-					visita.registroVisita(null);
-					break;
-				case 3:
-					Menu.menuInicial();
-					break;
-				default:
-					esMenu = true;
-					System.out.println("Opcion no valida\n por favor,"
-							+ "seleccione una opcion entre las disponibles");
-					break;
-			}
-	
-		} while (esMenu == true);
-	}//registroVisita
 }//Paciente

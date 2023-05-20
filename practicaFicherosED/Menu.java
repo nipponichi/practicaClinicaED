@@ -9,17 +9,6 @@ public class Menu {
 	static TestConexion testConexion = new TestConexion();
 	static Configuracion configuracion = new Configuracion();
 	private static final String PASSWORD = "1234"; 
-	/**
-	 * Método main
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		configuracion.leerConfiguracion();
-		TestConexion.consultaSelectPaciente();
-		TestConexion.consultaSelectPersonal();
-		TestConexion.consultaSelectVisita();
-		menuInicial();		
-	}//main
 
 	/**
 	* Menu inicial, estrutura switch en la que
@@ -103,6 +92,10 @@ public class Menu {
 	} while (esMenu == true);
 	}//menuPaciente
 	
+	
+	/**
+	 * Submenú que nos permite registrar un nuevo miembro del personal de la clínica
+	 */
 	public static void menuPersonal() {
 		boolean esMenu = false;
 		do {
@@ -129,6 +122,11 @@ public class Menu {
 	} while (esMenu == true);
 	}//menuPersonal	
 	
+	/**
+	 * Submenú que nos permite listar visitas de dos maneras:
+	 * 1 - Seleccionando DNI de paciente y doctor del listado
+	 * 2 - Introduciendo una fecha por consola y seleccionado un doctor del listado
+	 */
 	public static void menuHistorial() {
 		boolean esMenu = false;
 		do {
@@ -159,6 +157,10 @@ public class Menu {
 	} while (esMenu == true);
 	}
 	
+	/**
+	 * Submenú cargado tras dar de alta a un profesional, podemos elegir entre dar de alta
+	 * a mas personal de la clínica o volver al menú inicial.
+	 */
 	public static void menuContinuar() {
 		boolean esMenu = false;
 		do {
@@ -185,6 +187,11 @@ public class Menu {
 	} while (esMenu == true);
 	}
 	
+	/**
+	 * submenú que tras identificar que el dni introducido ya se encuentra en nuestro registro,
+	 * nos da la opción directa de registrar una nueva visita para el paciente.
+	 * @param dni
+	 */
 	public static void menuPacienteRegistrado(String dni) {
 		boolean esMenu = false;
 		do {
@@ -212,7 +219,9 @@ public class Menu {
 	}
 	
 	/**
-	 * 
+	 * submenú que tras no identificar el dni introducido en nuestro registro, nos permite
+	 * saltar directamente al menú de registro de nuevos pacientes para poder tramitar la visita
+	 * posteriormente.
 	 */
 	public static void menuPacienteNoRegistrado() {
 		boolean esMenu = false;
@@ -241,9 +250,12 @@ public class Menu {
 	}
 	
 	/**
-	 * 
+	 * Menú de configuración que nos facilita la edición del fichero configurarion.txt
+	 * para asignar nuevas credenciales de acceso a la base de datos.
+	 * Este menú requiere contraseña para acceder, salvo si el programa detecta un error de credenciales
+	 * al iniciar, ya que entiende que es el primer arranque del programa y estas credenciales necesitan
+	 * ser configuradas.
 	 */
-	
 	public static void menuConfiguracion() {
 
 		boolean esMenu = false;
