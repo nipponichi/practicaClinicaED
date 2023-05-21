@@ -110,7 +110,7 @@ public class Profesionales_Medicos extends Persona {
 		medico = new Profesionales_Medicos (codigo, nombre, apellidos, 
 				dni, localidad, telefono, especialidad);
 		PersonaApp_Scanner.medicos.add(medico);
-		Menu.menuContinuar();
+		//Menu.menuContinuar();
 		
 	}
 	/**

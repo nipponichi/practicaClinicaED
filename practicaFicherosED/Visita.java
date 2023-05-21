@@ -269,7 +269,7 @@ public class Visita {
 		    } else if (!esDniRegistrado) {
 		    	System.out.println("El dni introducido no se encuentra en"
 		    			+ " nuestro registro");
-		    	Menu.menuPacienteNoRegistrado();
+		    	//Menu.menuPacienteNoRegistrado();
 		    } else {	
 		        paciente = paciente.selectorPaciente(dni);
 		        System.out.println("Se ha seleccionado al paciente "
@@ -295,7 +295,7 @@ public class Visita {
             } else if (opcion != 0) {
                 System.out.println("Opcion no valida. Intentelo de nuevo.");
             } else if (opcion == 0) {
-            	Menu.menuHistorial();
+            	//Menu.menuHistorial();
             }
         } while (opcion != 0);
         
@@ -316,7 +316,7 @@ public class Visita {
                 	+ " Resultado: " + visita.getResultado());
             }
         }
-        Menu.menuHistorial();
+        //Menu.menuHistorial();
     }
 }//historialVisitasDni
 
