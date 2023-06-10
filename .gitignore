@@ -1,5 +1,10 @@
+# Ignorar archivo module-info.java
 module-info.java
+
+# Ignorar archivos de prueba
 VisitaTest.java
 Profesionales_MedicosTest.java
+
+# Ignorar la carpeta testingTratamientoFichero
 testingTratamientoFichero/
 
