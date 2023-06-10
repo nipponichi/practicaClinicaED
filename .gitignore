@@ -1,0 +1,6 @@
+# Ignora archivo module-info.java
+
+module-info.java
+VisitaTest.java
+Profesionales_MedicosTest.java
+testingTratamientoFichero/
